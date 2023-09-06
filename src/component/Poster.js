@@ -3,9 +3,9 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import Masonry from '@mui/lab/Masonry';
-
-export default function Poster() {
+import { toPng } from 'html-to-image';
+const Poster = React.forwardRef((props, ref) => {
+  const elementRef = React.useRef(null);
   const dispatch = useDispatch();
   const datastore = useSelector((state) => state.data);
   const [page, setPage] = React.useState([{ id: 1, obj: 'text', val: 'test' }]);
@@ -13,24 +13,48 @@ export default function Poster() {
     setPage(datastore);
     console.log(page, 'page');
   }, [datastore]);
+
+  React.useImperativeHandle(ref, () => {
+    download: () => {
+      if (ref) {
+        htmlToImageConvert();
+      }
+    };
+  });
+
+  const htmlToImageConvert = () => {
+    toPng(elementRef.current, { cacheBust: false })
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.download = 'my-image-name.png';
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <Stack
+      ref={elementRef}
       className="poster-wrapper"
       flexDirection={'column'}
       sx={{
         maxWidth: '640px',
-        background: '#fff',
         padding: 2,
         gap: 2,
         margin: '0 auto',
         backgroundImage:
-          'linear-gradient(to bottom,#fff 20%,rgba(0,156,166,0.4)',
+          'linear-gradient(to bottom,#fff,5%, #fff,50%, rgba(0,156,166,0.4)) ',
       }}
     >
       {page.map((item) => RenderElements(item))}
     </Stack>
   );
-}
+});
+
+export default Poster;
+
 function RenderElements(item) {
   if (item.obj === 'text') {
     return (
@@ -52,23 +76,23 @@ function RenderElements(item) {
       />
     );
   }
-  if (item.obj === 'masonry') {
+  if (item.obj === 'gallery') {
     return (
-      <Box sx={{ width: 500, minHeight: 377 }}>
-        <Masonry columns={3} spacing={3}>
-          {item.gallery.map((img_, index) => (
-            <Item key={index} sx={{ width: '100% ' }}>
-              <img
-                src={img_}
-                width="100%"
-                style={{ objectFit: 'cover' }}
-                alt={item.obj}
-                id={item.id}
-              />
-            </Item>
-          ))}
-        </Masonry>
-      </Box>
+      <Stack sx={{ display: 'flex', gap: 2 }} flexDirection="row">
+        {item.gallery.map((img_, index) => (
+          <img
+            key={index}
+            src={img_}
+            style={{
+              objectFit: 'cover',
+              width: 'clamp(25%,33%,50%)',
+              flexGrow: 1,
+            }}
+            alt={item.obj}
+            id={item.id}
+          />
+        ))}
+      </Stack>
     );
   }
   if (item.obj === 'image') {

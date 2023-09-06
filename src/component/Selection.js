@@ -57,6 +57,7 @@ const Selection = React.forwardRef((props, ref) => {
           ))}
         </Select>
       </FormControl>
+
       <CustomDialog ref={dialogRef} />
     </>
   );
@@ -70,7 +71,7 @@ const CustomDialog = React.forwardRef((props, ref) => {
   const [open, setOpen] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState();
   const [galleryLinks, setgalleryLinks] = React.useState();
-  const [galleryPreview, setGalleryPreview] = React.useState();
+  const [galleryPreview, setGalleryPreview] = React.useState([]);
   const [preview, setPreview] = React.useState();
   const customDialogRef = React.useRef();
   const [text, setText] = React.useState('');
@@ -134,19 +135,22 @@ const CustomDialog = React.forwardRef((props, ref) => {
     if (!galleryLinks) {
       return;
     }
-    let temp = Object.values(galleryLinks);
-
-    let imgPaths = temp.map((item) => {
-      let objectUrl = URL.createObjectURL(item);
-      setGalleryPreview([galleryPreview, ...objectUrl]);
-    });
+    let temp = [];
+    for (let i = 0; i < galleryLinks.length; i++) {
+      let objectUrl = URL.createObjectURL(galleryLinks[i]);
+      temp.push(objectUrl);
+    }
+    setGalleryPreview(temp);
 
     // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl);
+    return () =>
+      galleryPreview.forEach((item) => {
+        URL.revokeObjectURL(item);
+      });
   }, [galleryLinks]);
 
   React.useEffect(() => {
-    if (!galleryLinks) {
+    if (!selectedFile) {
       setPreview(undefined);
       return;
     }
@@ -225,6 +229,7 @@ const CustomDialog = React.forwardRef((props, ref) => {
             {selectedFile && <img src={preview} height="200" />}
             <input
               type="file"
+              multiple
               accept="image/png, image/jpeg"
               onChange={(e) => {
                 setSelectedFile(e.target.files[0]);

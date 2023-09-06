@@ -13,15 +13,29 @@ const inputType = ['header', 'text', 'image', 'gallery', 'multi type'];
 
 function Layout() {
   const inputRef = React.useRef();
-
+  const posterRef = React.useRef();
   const handleClick = () => {
     inputRef.current.clearSelection();
+  };
+  const downloadImage = () => {
+    posterRef.current.download();
   };
   return (
     <Box sx={{ flexGrow: 1, height: '98vh' }}>
       <Grid container spacing={2} sx={{ height: '100%' }}>
         <Grid sx={{ flexGrow: 1, textAlign: 'center' }}>
-          <Poster />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'end',
+              marginBottom: '16px',
+            }}
+          >
+            <Button variant="text" onClick={downloadImage}>
+              Download Image
+            </Button>
+          </Box>
+          <Poster ref={posterRef} />
         </Grid>
         <Grid sx={{ width: '360px' }}>
           <Item sx={{ height: '100%' }}>
