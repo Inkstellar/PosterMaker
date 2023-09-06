@@ -1,6 +1,6 @@
 {
-  "name": "stackblitz-starters-ac7psn",
-  "version": "0.0.0",
+  "name": "inkposters",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/react": "11.11.1",
