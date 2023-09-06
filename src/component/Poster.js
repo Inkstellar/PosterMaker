@@ -44,7 +44,7 @@ const Poster = React.forwardRef((props, ref) => {
         maxWidth: '768px',
         padding: '0 16px 16px',
         gap: 2,
-        margin: '-8px',
+        margin: '0',
         backgroundImage:
           'linear-gradient(to bottom,#fff,5%, #fff,50%, rgba(0,156,166,0.4)) ',
       }}
