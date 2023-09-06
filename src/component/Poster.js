@@ -77,14 +77,17 @@ function RenderElements(item) {
   }
   if (item.obj === 'gallery') {
     return (
-      <Stack sx={{ display: 'flex', gap: 2 }} flexDirection="row">
+      <Stack
+        sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}
+        flexDirection="row"
+      >
         {item.gallery.map((img_, index) => (
           <img
             key={index}
             src={img_}
             style={{
               objectFit: 'cover',
-              width: 'clamp(25%,33%,50%)',
+              width: 'clamp(150px,200px,320px)',
               flexGrow: 1,
             }}
             alt={item.obj}
