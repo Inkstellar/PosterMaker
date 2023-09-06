@@ -22,10 +22,11 @@ const Poster = React.forwardRef((props, ref) => {
   }));
 
   const htmlToImageConvert = () => {
-    toPng(elementRef.current, { cacheBust: true })
+    toPng(elementRef.current, { cacheBust: false })
       .then((dataUrl) => {
         const link = document.createElement('a');
-        link.download = 'poster.png';
+        let date_ = new Date();
+        link.download = 'poster' + date_ + '.png';
         link.href = dataUrl;
         link.click();
       })
