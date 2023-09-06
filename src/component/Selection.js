@@ -168,6 +168,7 @@ const CustomDialog = React.forwardRef((props, ref) => {
       onChange={(e) => setVariant(e.target.value)}
       defaultValue={variant}
     >
+      <option value="h2">Hero</option>
       <option value="h4">Header</option>
       <option value="h6">Subheader</option>
       <option value="body1">paragraph</option>
