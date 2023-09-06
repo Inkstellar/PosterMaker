@@ -4,29 +4,28 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { toPng } from 'html-to-image';
+
 const Poster = React.forwardRef((props, ref) => {
-  const elementRef = React.useRef(null);
+  const elementRef = React.useRef();
   const dispatch = useDispatch();
   const datastore = useSelector((state) => state.data);
-  const [page, setPage] = React.useState([{ id: 1, obj: 'text', val: 'test' }]);
+  const [page, setPage] = React.useState([]);
   React.useEffect(() => {
     setPage(datastore);
     console.log(page, 'page');
   }, [datastore]);
 
-  React.useImperativeHandle(ref, () => {
+  React.useImperativeHandle(ref, () => ({
     download: () => {
-      if (ref) {
-        htmlToImageConvert();
-      }
-    };
-  });
+      htmlToImageConvert();
+    },
+  }));
 
   const htmlToImageConvert = () => {
     toPng(elementRef.current, { cacheBust: false })
       .then((dataUrl) => {
         const link = document.createElement('a');
-        link.download = 'my-image-name.png';
+        link.download = 'poster.png';
         link.href = dataUrl;
         link.click();
       })
