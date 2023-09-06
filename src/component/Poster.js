@@ -39,9 +39,9 @@ const Poster = React.forwardRef((props, ref) => {
       className="poster-wrapper"
       flexDirection={'column'}
       sx={{
-        maxWidth: '640px',
-        padding: 2,
-        gap: 2,
+        maxWidth: '768px',
+        padding: 0,
+        gap: 1,
         margin: '0 auto',
         backgroundImage:
           'linear-gradient(to bottom,#fff,5%, #fff,50%, rgba(0,156,166,0.4)) ',
@@ -68,7 +68,7 @@ function RenderElements(item) {
         src={item.path}
         width="100%"
         height="auto"
-        style={{ objectFit: 'cover', width: '640px' }}
+        style={{ objectFit: 'cover', width: '768px' }}
         alt={item.obj}
         id={item.id}
         key={item.id}
@@ -78,7 +78,7 @@ function RenderElements(item) {
   if (item.obj === 'gallery') {
     return (
       <Stack
-        sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}
+        sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}
         flexDirection="row"
       >
         {item.gallery.map((img_, index) => (
@@ -89,6 +89,7 @@ function RenderElements(item) {
               objectFit: 'cover',
               width: 'clamp(150px,200px,320px)',
               flexGrow: 1,
+              maxHeight: '240px',
             }}
             alt={item.obj}
             id={item.id}
@@ -103,7 +104,7 @@ function RenderElements(item) {
         src={item.path}
         width="100%"
         height="300px"
-        style={{ objectFit: 'cover', maxWidth: '640px' }}
+        style={{ objectFit: 'cover', maxWidth: '768px' }}
         alt={item.obj}
         id={item.id}
         key={item.id}
