@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { toPng } from 'html-to-image';
+import { toPng, toBlob } from 'html-to-image';
 
 const Poster = React.forwardRef((props, ref) => {
   const elementRef = React.useRef();
@@ -22,7 +22,7 @@ const Poster = React.forwardRef((props, ref) => {
   }));
 
   const htmlToImageConvert = () => {
-    toPng(elementRef.current, { cacheBust: false })
+    toPng(elementRef.current, { cacheBust: true })
       .then((dataUrl) => {
         const link = document.createElement('a');
         link.download = 'poster.png';
@@ -33,6 +33,7 @@ const Poster = React.forwardRef((props, ref) => {
         console.log(err);
       });
   };
+
   return (
     <Stack
       ref={elementRef}
@@ -40,9 +41,9 @@ const Poster = React.forwardRef((props, ref) => {
       flexDirection={'column'}
       sx={{
         maxWidth: '768px',
-        padding: 0,
-        gap: 1,
-        margin: '0 auto',
+        padding: '0 16px 16px',
+        gap: 2,
+        margin: '-8px',
         backgroundImage:
           'linear-gradient(to bottom,#fff,5%, #fff,50%, rgba(0,156,166,0.4)) ',
       }}
@@ -66,8 +67,6 @@ function RenderElements(item) {
     return (
       <img
         src={item.path}
-        width="100%"
-        height="auto"
         style={{ objectFit: 'cover', width: '768px' }}
         alt={item.obj}
         id={item.id}
@@ -87,7 +86,7 @@ function RenderElements(item) {
             src={img_}
             style={{
               objectFit: 'cover',
-              width: 'clamp(150px,200px,320px)',
+              width: 'clamp(150px,240px,380px)',
               flexGrow: 1,
               maxHeight: '240px',
             }}
