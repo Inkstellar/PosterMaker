@@ -46,7 +46,7 @@ const Poster = React.forwardRef((props, ref) => {
         gap: 2,
         margin: '0',
         backgroundImage:
-          'linear-gradient(to bottom,#fff,5%, #fff,50%, rgba(0,156,166,0.4)) ',
+          'linear-gradient(to bottom,#fff,96px,#fff,97px,#bfeaec, #fffef9) ',
       }}
     >
       {page.map((item) => RenderElements(item))}
