@@ -11,6 +11,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "firebase": "^10.3.1",
+    "firebase-tools": "^12.5.3",
     "html-to-image": "^1.11.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
