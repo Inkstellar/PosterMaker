@@ -37,7 +37,7 @@ const Selection = React.forwardRef((props, ref) => {
   return (
     <>
       <FormControl
-        sx={{ flexGrow: 1, minWidth: '210px', paddingRight: '8px' }}
+        sx={{ flexGrow: 1, minWidth: '200px', paddingRight: '8px' }}
         size="small"
         ref={selectRef}
       >
